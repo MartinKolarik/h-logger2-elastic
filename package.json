@@ -1,0 +1,29 @@
+{
+	"name": "h-logger2-elastic",
+	"description": "Elasticsearch and APM integration for h-logger2",
+	"version": "1.0.0",
+	"github": "https://github.com/MartinKolarik/h-logger2-elastic/",
+	"main": "./src/index.js",
+	"dependencies": {
+		"safe-json-stringify": "^1.2.0"
+	},
+	"devDependencies": {
+		"eslint": "^4.19.1"
+	},
+	"peerDependencies": {
+		"h-logger2": "~1.0.0"
+	},
+	"author": {
+		"name": "Martin Kolárik",
+		"email": "martin@kolarik.sk",
+		"url": "https://kolarik.sk"
+	},
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/MartinKolarik/h-logger2-elastic.git"
+	},
+	"bugs": {
+		"url": "https://github.com/MartinKolarik/h-logger2-elastic/issues"
+	}
+}
