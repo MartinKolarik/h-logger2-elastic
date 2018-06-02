@@ -1,12 +1,16 @@
 const url = require('fast-url-parser');
 
 module.exports.express = {
-	middleware (apmClient, { setOrigin = true } = {}) {
+	middleware (apmClient, { setAddress = true, setOrigin = true } = {}) {
 		if (!apmClient) {
 			return (req, res, next) => next();
 		}
 
 		return (req, res, next) => {
+			if (setAddress) {
+				apmClient.setTag('address', req.ip);
+			}
+
 			if (setOrigin) {
 				let origin = req.get('origin') || req.get('referrer');
 
@@ -27,13 +31,17 @@ module.exports.koa = {
 			router.get(route[0], route[1], fn);
 		});
 	},
-	middleware (apmClient, { prefix = '', setNames = true, setOrigin = true } = {}) {
+	middleware (apmClient, { prefix = '', setAddress = true, setOrigin = true, setRouteName = true } = {}) {
 		if (!apmClient) {
 			return async (ctx, next) => next();
 		}
 
 		return async (ctx, next) => {
-			if (setNames) {
+			if (setAddress) {
+				apmClient.setTag('address', ctx.request.ip);
+			}
+
+			if (setRouteName) {
 				let matched = ctx.matched.find(r => r.name);
 
 				if (matched) {
