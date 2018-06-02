@@ -1,7 +1,7 @@
 {
 	"name": "h-logger2-elastic",
 	"description": "Elasticsearch and APM integration for h-logger2",
-	"version": "1.0.0",
+	"version": "1.1.0",
 	"github": "https://github.com/MartinKolarik/h-logger2-elastic/",
 	"main": "./src/index.js",
 	"dependencies": {
