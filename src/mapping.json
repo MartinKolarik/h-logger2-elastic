@@ -5,7 +5,7 @@
 			"type": "date"
 		},
 		"hostname": {
-			"type": "text"
+			"type": "keyword"
 		},
 		"level": {
 			"type": "long"
@@ -14,12 +14,10 @@
 			"type": "long"
 		},
 		"scope": {
-			"type": "text",
-			"fields": {
-				"keyword": {
-					"type": "keyword"
-				}
-			}
+			"type": "keyword"
+		},
+		"service": {
+			"type": "keyword"
 		}
 	}
 }

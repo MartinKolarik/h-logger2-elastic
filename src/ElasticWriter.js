@@ -42,6 +42,7 @@ class ElasticWriter extends Writer {
 				body.context = logger.serialize(context);
 			}
 
+			body.service = scope.split(':')[0];
 			body.hostname = hostname;
 			body.pid = process.pid;
 			body['@timestamp'] = new Date().toISOString();
