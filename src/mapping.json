@@ -1,0 +1,25 @@
+{
+	"dynamic": "false",
+	"properties": {
+		"@timestamp": {
+			"type": "date"
+		},
+		"hostname": {
+			"type": "text"
+		},
+		"level": {
+			"type": "long"
+		},
+		"pid": {
+			"type": "long"
+		},
+		"scope": {
+			"type": "text",
+			"fields": {
+				"keyword": {
+					"type": "keyword"
+				}
+			}
+		}
+	}
+}

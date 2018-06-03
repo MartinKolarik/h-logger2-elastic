@@ -1,4 +1,5 @@
 const stringify = require('safe-json-stringify');
+const promiseRetry = require('promise-retry');
 const Writer = require('h-logger2').Writer;
 
 const hostname = require('os').hostname();
@@ -42,11 +43,19 @@ class ElasticWriter extends Writer {
 			body.pid = process.pid;
 			body['@timestamp'] = new Date().toISOString();
 
-			this.options.esClient.index({
-				index: `logger-v${version}-${body['@timestamp'].substr(0, 10)}`,
-				type: `logger-v${version}`,
-				body: stringify(body),
-			}).catch(e => console.error('ElasticWriter error:', e));
+			promiseRetry((retry) => {
+				return this.options.esClient.index({
+					index: `logger-v${version}-${body['@timestamp'].substr(0, 10)}`,
+					type: `log-entry`,
+					body: stringify(body),
+				}).catch(retry);
+			}, { retries: 2 }).catch((error) => {
+				console.error('ElasticWriter error:', error, body);
+
+				if (this.options.apmClient) {
+					this.options.apmClient.captureError(error);
+				}
+			});
 		}
 	}
 }
