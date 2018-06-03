@@ -4,6 +4,7 @@ const Writer = require('h-logger2').Writer;
 
 const hostname = require('os').hostname();
 const version = require('../package.json').version;
+const defaults = { indexPrefix: 'logger', docType: 'log-entry' };
 
 class ElasticWriter extends Writer {
 	constructor (level, options) {
@@ -12,6 +13,8 @@ class ElasticWriter extends Writer {
 		if (!options.esClient) {
 			throw new Error(`options.esClient is required`);
 		}
+
+		this.options = Object.assign({}, defaults, this.options);
 	}
 
 	write (logger, level, message, error, context) {
@@ -45,8 +48,8 @@ class ElasticWriter extends Writer {
 
 			promiseRetry((retry) => {
 				return this.options.esClient.index({
-					index: `logger-v${version}-${body['@timestamp'].substr(0, 10)}`,
-					type: `log-entry`,
+					index: `${this.options.indexPrefix}-v${version}-${body['@timestamp'].substr(0, 10)}`,
+					type: this.options.docType,
 					body: stringify(body),
 				}).catch(retry);
 			}, { retries: 2 }).catch((error) => {
