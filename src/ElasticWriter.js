@@ -21,6 +21,7 @@ class ElasticWriter extends Writer {
 		let scope = logger.name;
 
 		if (this.options.apmClient && level >= logger.constructor.levels.error && error) {
+			this.options.apmClient.setTag('level', level);
 			this.options.apmClient.captureError(error, {
 				custom: {
 					scope,
