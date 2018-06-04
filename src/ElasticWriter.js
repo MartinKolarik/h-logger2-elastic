@@ -20,12 +20,13 @@ class ElasticWriter extends Writer {
 	write (logger, level, message, error, context) {
 		let scope = logger.name;
 
-		if (this.options.apmClient && level >= logger.constructor.levels.error) {
+		if (this.options.apmClient && level >= logger.constructor.levels.error && error) {
 			this.options.apmClient.captureError(error, {
 				custom: {
 					scope,
 					message,
 					context: logger.serialize(context, ElasticWriter.ApmSerializers),
+					error: Object.assign({}, error),
 				},
 			});
 		} else {
