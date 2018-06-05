@@ -27,7 +27,6 @@ class ElasticWriter extends Writer {
 					scope,
 					message,
 					context: logger.serialize(context, ElasticWriter.ApmSerializers),
-					error: Object.assign({}, error),
 				},
 			});
 		} else {
