@@ -15,10 +15,10 @@ const Logger = require('h-logger2');
 const ElasticWriter = require('h-logger2-elastic');
 
 const logger = new Logger('my-app-name', [ new Logger.ElasticWriter(Logger.TRACE, {
-	esClient, // instance of elasticsearch client (https://github.com/elastic/elasticsearch-js)
-	apmClient, // optional, instance of APM client (https://github.com/elastic/apm-agent-nodejs)
-	indexPrefix, // optional, elasticsearch index name, defaults to "logger"
-	docType: // optional, elasticsearch document type, defaults to "log-entry"
+    esClient, // instance of elasticsearch client (https://github.com/elastic/elasticsearch-js)
+    apmClient, // optional, instance of APM client (https://github.com/elastic/apm-agent-nodejs)
+    indexPrefix, // optional, elasticsearch index name, defaults to "logger"
+    docType: // optional, elasticsearch document type, defaults to "log-entry"
 }) ]);
 ```
 
