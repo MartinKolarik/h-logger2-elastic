@@ -28,6 +28,7 @@ class ElasticWriter extends Writer {
 					message,
 					context: logger.serialize(context, ElasticWriter.ApmSerializers),
 				},
+				handled: error.handled === undefined || error.handled,
 			});
 		} else {
 			let body = { scope, level, message };
