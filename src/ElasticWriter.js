@@ -20,7 +20,7 @@ class ElasticWriter extends Writer {
 	write (logger, level, message, error, context) {
 		let scope = logger.name;
 
-		if (this.options.apmClient && level >= logger.constructor.levels.error && error) {
+		if (this.options.apmClient && level >= logger.constructor.levels.error) {
 			let transaction;
 
 			// Workaround for https://github.com/elastic/apm-agent-nodejs/issues/718
@@ -29,7 +29,7 @@ class ElasticWriter extends Writer {
 			}
 
 			this.options.apmClient.setTag('level', level);
-			this.options.apmClient.captureError(error, {
+			this.options.apmClient.captureError(error || new Error(message), {
 				custom: {
 					scope,
 					message,
