@@ -35,7 +35,7 @@ class ElasticWriter extends Writer {
 					message,
 					context: logger.serialize(context, ElasticWriter.ApmSerializers),
 				},
-				handled: error.handled === undefined || error.handled,
+				handled: !context || context.handled === undefined || context.handled,
 			});
 
 			if (transaction) {
