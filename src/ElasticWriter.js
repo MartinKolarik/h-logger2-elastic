@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const stringify = require('safe-json-stringify');
 const promiseRetry = require('promise-retry');
 const Writer = require('h-logger2').Writer;
@@ -17,6 +18,26 @@ class ElasticWriter extends Writer {
 		this.options = Object.assign({}, defaults, this.options);
 	}
 
+	static getErrorProperties (error) {
+		if (!error || typeof error !== 'object') {
+			return {};
+		}
+
+		return _.mapValues(error, (value) => {
+			// Support errors that have other errors as properties:
+			// http://bluebirdjs.com/docs/api/aggregateerror.html
+			if (value instanceof Error) {
+				return _.assign({
+					name: value.name,
+					message: value.message,
+					stack: value.stack,
+				}, value);
+			}
+
+			return value;
+		});
+	}
+
 	write (logger, level, message, error, context) {
 		let scope = logger.name;
 
@@ -33,6 +54,7 @@ class ElasticWriter extends Writer {
 				custom: {
 					scope,
 					message,
+					attributes: ElasticWriter.getErrorProperties(error),
 					context: logger.serialize(context, ElasticWriter.ApmSerializers),
 				},
 				handled: !context || context.handled === undefined || context.handled,

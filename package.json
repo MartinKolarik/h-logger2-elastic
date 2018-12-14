@@ -6,11 +6,16 @@
 	"main": "./src/index.js",
 	"license": "MIT",
 	"dependencies": {
+		"lodash": "^4.17.11",
 		"promise-retry": "^1.1.1",
 		"safe-json-stringify": "^1.2.0"
 	},
 	"devDependencies": {
 		"@martin-kolarik/eslint-config": "^1.0.5",
+		"@types/eslint": "^4.16.5",
+		"@types/lodash": "^4.14.119",
+		"@types/promise-retry": "^1.1.2",
+		"@types/safe-json-stringify": "^1.0.1",
 		"eslint": "^5.9.0",
 		"eslint-plugin-chai-expect": "^2.0.1",
 		"eslint-plugin-html": "^5.0.0",
