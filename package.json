@@ -11,19 +11,19 @@
 		"safe-json-stringify": "^1.2.0"
 	},
 	"devDependencies": {
-		"@martin-kolarik/eslint-config": "^1.0.5",
-		"@types/eslint": "^4.16.5",
-		"@types/lodash": "^4.14.119",
-		"@types/promise-retry": "^1.1.2",
+		"@martin-kolarik/eslint-config": "^1.0.7",
+		"@types/eslint": "^4.16.6",
+		"@types/lodash": "^4.14.133",
+		"@types/promise-retry": "^1.1.3",
 		"@types/safe-json-stringify": "^1.0.1",
-		"eslint": "^5.9.0",
+		"eslint": "^5.16.0",
 		"eslint-plugin-chai-expect": "^2.0.1",
-		"eslint-plugin-html": "^5.0.0",
-		"eslint-plugin-node": "^8.0.0",
-		"eslint-plugin-promise": "^4.0.1"
+		"eslint-plugin-html": "^5.0.5",
+		"eslint-plugin-node": "^9.1.0",
+		"eslint-plugin-promise": "^4.1.1"
 	},
 	"peerDependencies": {
-		"h-logger2": "^1.0.0"
+		"h-logger2": "^1.0.3"
 	},
 	"author": {
 		"name": "Martin Kolárik",
