@@ -1,11 +1,10 @@
 const _ = require('lodash');
-const stringify = require('safe-json-stringify');
-const promiseRetry = require('promise-retry');
+const Serializer = require('./Serializer');
 const Writer = require('h-logger2').Writer;
+const BatchQ = require('@martin-kolarik/batch-queue');
 
 const hostname = require('os').hostname();
-const version = require('../package.json').version;
-const defaults = { indexPrefix: 'logger', docType: 'log-entry' };
+const defaults = { index: `logger-v3-000001`, batchSize: 100, concurrency: 2, timeout: 4000 };
 
 class ElasticWriter extends Writer {
 	constructor (level, options) {
@@ -15,7 +14,9 @@ class ElasticWriter extends Writer {
 			throw new Error(`options.esClient is required`);
 		}
 
+		this.client = options.esClient.child({ Serializer });
 		this.options = Object.assign({}, defaults, this.options);
+		this.queue = new BatchQ(items => this.sendToElastic(items), this.options);
 	}
 
 	static getErrorProperties (error) {
@@ -38,63 +39,58 @@ class ElasticWriter extends Writer {
 		});
 	}
 
+	sendToElastic (records) {
+		let body = [];
+
+		records.forEach((record) => {
+			body.push({ index: {} });
+			body.push(record);
+		});
+
+		// The client performs 3 retries by default.
+		return this.client.bulk({ index: this.options.index, body }).catch((error) => {
+			console.error('ElasticWriter error (failed to store logs in elastic):', error, body);
+
+			if (this.options.apmClient) {
+				this.options.apmClient.captureError(error);
+			}
+		});
+	}
+
 	write (logger, level, message, error, context) {
 		let scope = logger.name;
 
 		if (this.options.apmClient && level >= logger.constructor.levels.error) {
-			let transaction;
-
-			// Workaround for https://github.com/elastic/apm-agent-nodejs/issues/718
-			if (!this.options.apmClient.currentTransaction) {
-				transaction = this.options.apmClient.startTransaction();
-			}
-
-			this.options.apmClient.setTag('level', level);
 			this.options.apmClient.captureError(error || new Error(message), {
 				custom: {
 					scope,
 					message,
 					attributes: ElasticWriter.getErrorProperties(error),
 					context: logger.serialize(context, ElasticWriter.ApmSerializers),
+					tags: { level },
 				},
 				handled: !context || context.handled === undefined || context.handled,
 			});
-
-			if (transaction) {
-				this.options.apmClient.endTransaction();
-			}
 		} else {
-			let body = { scope, level, message };
+			let record = { scope, level, message };
 
 			if (error) {
-				body.error = Object.assign({
+				record.error = Object.assign({
 					message: error.message,
 					stack: error.stack,
 				}, error);
 			}
 
 			if (context) {
-				body.context = logger.serialize(context);
+				record.context = logger.serialize(context);
 			}
 
-			body.service = scope.split(':')[0];
-			body.hostname = hostname;
-			body.pid = process.pid;
-			body['@timestamp'] = new Date().toISOString();
+			record.service = scope.split(':')[0];
+			record.hostname = hostname;
+			record.pid = process.pid;
+			record['@timestamp'] = new Date().toISOString();
 
-			promiseRetry((retry) => {
-				return this.options.esClient.index({
-					index: `${this.options.indexPrefix}-v${version}-${body['@timestamp'].substr(0, 10)}`,
-					type: this.options.docType,
-					body: stringify(body),
-				}).catch(retry);
-			}, { retries: 2 }).catch((error) => {
-				console.error('ElasticWriter error:', error, body);
-
-				if (this.options.apmClient) {
-					this.options.apmClient.captureError(error);
-				}
-			});
+			this.queue.push(record);
 		}
 	}
 }
