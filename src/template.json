@@ -1,0 +1,38 @@
+{
+	"index_patterns": [
+		"logger-v3*"
+	],
+	"settings": {
+		"index": {
+			"lifecycle": {
+				"name": "logger-v3",
+				"rollover_alias": "logger-v3"
+			},
+			"number_of_shards": "1",
+			"number_of_replicas": "0"
+		}
+	},
+	"mappings": {
+		"dynamic": "false",
+		"properties": {
+			"hostname": {
+				"type": "keyword"
+			},
+			"@timestamp": {
+				"type": "date"
+			},
+			"level": {
+				"type": "long"
+			},
+			"service": {
+				"type": "keyword"
+			},
+			"scope": {
+				"type": "keyword"
+			},
+			"pid": {
+				"type": "long"
+			}
+		}
+	}
+}
