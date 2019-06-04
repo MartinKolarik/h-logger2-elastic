@@ -4,7 +4,7 @@ const Writer = require('h-logger2').Writer;
 const BatchQ = require('@martin-kolarik/batch-queue');
 
 const hostname = require('os').hostname();
-const defaults = { index: `logger-v3-000001`, batchSize: 100, concurrency: 2, timeout: 4000 };
+const defaults = { index: `logger-v3`, batchSize: 100, concurrency: 2, timeout: 4000 };
 
 class ElasticWriter extends Writer {
 	constructor (level, options) {
