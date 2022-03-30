@@ -6,24 +6,24 @@
 	"main": "./src/index.js",
 	"license": "MIT",
 	"dependencies": {
-		"@elastic/elasticsearch": "^7.13.0",
 		"@martin-kolarik/batch-queue": "^1.0.0",
 		"lodash": "^4.17.21",
 		"promise-retry": "^2.0.1",
 		"safe-json-stringify": "^1.2.0"
 	},
 	"devDependencies": {
-		"@martin-kolarik/eslint-config": "^4.0.1",
-		"eslint": "^7.29.0",
-		"eslint-plugin-chai-expect": "^2.2.0",
-		"eslint-plugin-html": "^6.1.2",
+		"@martin-kolarik/eslint-config": "^5.0.1",
+		"eslint": "^8.12.0",
+		"eslint-plugin-chai-expect": "^3.0.0",
+		"eslint-plugin-html": "^6.2.0",
 		"eslint-plugin-node": "^11.1.0",
-		"eslint-plugin-prefer-let": "^1.1.0",
-		"eslint-plugin-promise": "^5.1.0",
+		"eslint-plugin-prefer-let": "^3.0.1",
+		"eslint-plugin-promise": "^6.0.0",
 		"h-logger2": "^1.0.4"
 	},
 	"peerDependencies": {
-		"h-logger2": "^1.0.4"
+		"h-logger2": "^1.0.4",
+		"@elastic/elasticsearch": "^8.1.0"
 	},
 	"author": {
 		"name": "Martin Kolárik",
