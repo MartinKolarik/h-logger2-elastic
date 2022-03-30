@@ -24,7 +24,7 @@ class ElasticWriter extends Writer {
 			return {};
 		}
 
-		return _.mapValues(error, (value) => {
+		return _.assign(_.mapValues(error, (value) => {
 			// Support errors that have other errors as properties:
 			// http://bluebirdjs.com/docs/api/aggregateerror.html
 			if (value instanceof Error) {
@@ -36,7 +36,7 @@ class ElasticWriter extends Writer {
 			}
 
 			return value;
-		});
+		}), { message: error.message });
 	}
 
 	sendToElastic (records) {
