@@ -89,7 +89,7 @@ class ElasticWriter extends Writer {
 			record.service = scope.split(':')[0];
 			record.hostname = hostname;
 			record.pid = process.pid;
-			record['@timestamp'] = new Date(this.seqDate).toISOString();
+			record['@timestamp'] = new Date(this.seqDate.now()).toISOString();
 
 			this.queue.push(record);
 		}
