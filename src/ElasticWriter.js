@@ -17,6 +17,7 @@ class ElasticWriter extends Writer {
 		this.client = options.esClient.child({ Serializer });
 		this.options = Object.assign({}, defaults, this.options);
 		this.queue = new BatchQ(items => this.sendToElastic(items), this.options);
+		this.seqDate = new SeqDate();
 	}
 
 	static getErrorProperties (error) {
@@ -88,7 +89,7 @@ class ElasticWriter extends Writer {
 			record.service = scope.split(':')[0];
 			record.hostname = hostname;
 			record.pid = process.pid;
-			record['@timestamp'] = new Date().toISOString();
+			record['@timestamp'] = new Date(this.seqDate).toISOString();
 
 			this.queue.push(record);
 		}
@@ -106,5 +107,18 @@ ElasticWriter.ApmSerializers = {
 		return undefined;
 	},
 };
+
+class SeqDate {
+	now () {
+		let now = Math.floor(Date.now() / 1000) * 1000;
+
+		if (now !== this.date) {
+			this.date = now;
+			this.seq = 0;
+		}
+
+		return now + Math.min(this.seq++, 999);
+	}
+}
 
 module.exports = ElasticWriter;
