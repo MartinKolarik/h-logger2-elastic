@@ -66,7 +66,7 @@ class ElasticWriter extends Writer {
 				custom: {
 					scope,
 					message,
-					attributes: ElasticWriter.getErrorProperties(error),
+					attributes: ElasticWriter.getErrorProperties(logger.serialize(error)),
 					context: logger.serialize(context, ElasticWriter.ApmSerializers),
 					tags: { level },
 				},
