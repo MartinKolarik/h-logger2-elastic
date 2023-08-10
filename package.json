@@ -12,18 +12,16 @@
 		"safe-json-stringify": "^1.2.0"
 	},
 	"devDependencies": {
-		"@martin-kolarik/eslint-config": "^5.0.1",
-		"eslint": "^8.12.0",
+		"@martin-kolarik/eslint-config": "^7.1.6",
+		"eslint": "^8.46.0",
 		"eslint-plugin-chai-expect": "^3.0.0",
-		"eslint-plugin-html": "^6.2.0",
-		"eslint-plugin-node": "^11.1.0",
 		"eslint-plugin-prefer-let": "^3.0.1",
-		"eslint-plugin-promise": "^6.0.0",
-		"h-logger2": "^1.0.4"
+		"eslint-plugin-promise": "^6.1.1",
+		"h-logger2": "^1.1.2"
 	},
 	"peerDependencies": {
 		"h-logger2": "^1.0.4",
-		"@elastic/elasticsearch": "^8.1.0"
+		"@elastic/elasticsearch": "^8.9.0"
 	},
 	"author": {
 		"name": "Martin Kolárik",
