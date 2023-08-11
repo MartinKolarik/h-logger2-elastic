@@ -1,12 +1,12 @@
 {
 	"index_patterns": [
-		"logger-v3*"
+		"logger-v5*"
 	],
 	"settings": {
 		"index": {
 			"lifecycle": {
-				"name": "logger-v3",
-				"rollover_alias": "logger-v3"
+				"name": "logger-v5",
+				"rollover_alias": "logger-v5"
 			},
 			"number_of_shards": "1",
 			"number_of_replicas": "0"
@@ -15,23 +15,35 @@
 	"mappings": {
 		"dynamic": "false",
 		"properties": {
-			"hostname": {
-				"type": "keyword"
-			},
 			"@timestamp": {
 				"type": "date"
-			},
-			"level": {
-				"type": "long"
-			},
-			"service": {
-				"type": "keyword"
 			},
 			"scope": {
 				"type": "keyword"
 			},
-			"pid": {
+			"message": {
+				"type": "keyword"
+			},
+			"host.hostname": {
+				"type": "keyword"
+			},
+			"log.level": {
+				"type": "keyword"
+			},
+			"process.pid": {
 				"type": "long"
+			},
+			"service.name": {
+				"type": "keyword"
+			},
+			"service.environment": {
+				"type": "keyword"
+			},
+			"trace.id": {
+				"type": "keyword"
+			},
+			"transaction.id": {
+				"type": "keyword"
 			}
 		}
 	}

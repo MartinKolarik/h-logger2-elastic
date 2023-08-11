@@ -4,9 +4,13 @@ const Writer = require('h-logger2').Writer;
 const BatchQ = require('@martin-kolarik/batch-queue');
 
 const hostname = require('os').hostname();
-const defaults = { index: `logger-v3`, batchSize: 100, concurrency: 2, timeout: 4000 };
+const defaults = { index: `logger-v5`, batchSize: 100, concurrency: 2, timeout: 4000 };
 
 class ElasticWriter extends Writer {
+	/**
+	 * @param {number} level
+	 * @param {{ esClient: Client, apmClient?: Agent }} options
+	 */
 	constructor (level, options) {
 		super(level, options);
 
@@ -60,20 +64,22 @@ class ElasticWriter extends Writer {
 
 	write (logger, level, message, error, context) {
 		let scope = logger.name;
+		let { apmClient } = this.options;
+		let levelAsString = logger.constructor.levelsByValue[level];
 
-		if (this.options.apmClient && level >= logger.constructor.levels.error) {
-			this.options.apmClient.captureError(error || new Error(message), {
+		if (apmClient && level >= logger.constructor.levels.error) {
+			apmClient.captureError(error || new Error(message), {
 				custom: {
 					scope,
 					message,
 					attributes: ElasticWriter.getErrorProperties(logger.serialize(error)),
 					context: logger.serialize(context, ElasticWriter.ApmSerializers),
-					tags: { level },
+					tags: { level: levelAsString },
 				},
 				handled: !context || context.handled === undefined || context.handled,
 			});
 		} else {
-			let record = { scope, level, message };
+			let record = { scope, log: { level: levelAsString }, message };
 
 			if (error) {
 				record.error = Object.assign({
@@ -86,10 +92,24 @@ class ElasticWriter extends Writer {
 				record.context = logger.serialize(context);
 			}
 
-			record.service = scope.split(':')[0];
-			record.hostname = hostname;
-			record.pid = process.pid;
+			record.host = { hostname };
+			record.service = { name: apmClient?.getServiceName() || scope.split(':')[0], environment: process.env.NODE_ENV };
+			record.process = { pid: process.pid };
 			record['@timestamp'] = new Date(this.seqDate.now()).toISOString();
+
+			// Transaction integration based on https://github.com/elastic/ecs-logging-nodejs/blob/main/loggers/pino/index.js
+			let transaction = apmClient?.currentTransaction;
+
+			if (transaction) {
+				record.trace = { id: transaction.traceId };
+				record.transaction = { id: transaction.id };
+
+				let span = apmClient.currentSpan;
+
+				if (span) {
+					record.span = { id: span.id };
+				}
+			}
 
 			this.queue.push(record);
 		}

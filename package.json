@@ -20,8 +20,9 @@
 		"h-logger2": "^1.1.2"
 	},
 	"peerDependencies": {
-		"h-logger2": "^1.0.4",
-		"@elastic/elasticsearch": "^8.9.0"
+		"@elastic/elasticsearch": "^8.9.0",
+		"elastic-apm-node": "^3.49.1",
+		"h-logger2": "^1.0.4"
 	},
 	"author": {
 		"name": "Martin Kolárik",
