@@ -27,6 +27,9 @@
 			"host.hostname": {
 				"type": "keyword"
 			},
+			"host.name": {
+				"type": "keyword"
+			},
 			"log.level": {
 				"type": "keyword"
 			},
@@ -44,6 +47,13 @@
 			},
 			"transaction.id": {
 				"type": "keyword"
+			},
+			"span.id": {
+				"type": "keyword"
+			},
+			"context": {
+				"type": "object",
+				"dynamic": true
 			}
 		}
 	}
