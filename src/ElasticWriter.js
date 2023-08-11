@@ -92,7 +92,7 @@ class ElasticWriter extends Writer {
 				record.context = logger.serialize(context);
 			}
 
-			record.host = { hostname };
+			record.host = { hostname, name: hostname };
 			record.service = { name: apmClient?.getServiceName() || scope.split(':')[0], environment: process.env.NODE_ENV };
 			record.process = { pid: process.pid };
 			record['@timestamp'] = new Date(this.seqDate.now()).toISOString();
