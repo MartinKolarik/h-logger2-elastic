@@ -21,7 +21,7 @@
 	},
 	"peerDependencies": {
 		"@elastic/elasticsearch": "^8.9.0",
-		"elastic-apm-node": "^3.49.1",
+		"elastic-apm-node": "^4.8.1",
 		"h-logger2": "^1.0.4"
 	},
 	"author": {
