@@ -42,6 +42,12 @@
 			"service.environment": {
 				"type": "keyword"
 			},
+			"service.runtime.name": {
+				"type": "keyword"
+			},
+			"service.runtime.version": {
+				"type": "keyword"
+			},
 			"trace.id": {
 				"type": "keyword"
 			},
