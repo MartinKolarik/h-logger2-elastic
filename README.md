@@ -8,30 +8,10 @@ Elasticsearch and APM integration for [h-logger2](https://github.com/MartinKolar
 $ npm install h-logger2-elastic
 ```
 
-Creating Elasticsearch template (use `src/template.json`):
-
-```
-PUT /_template/logger-v3
-<template>
-```
-
-Creating lifecycle policy (use `src/policy.json`):
-
-```
-PUT /_ilm/policy/logger-v3
-<policy>
-```
-
-Creating the index:
-
-```
-PUT /logger-v3-000001 
-{
-    "aliases": {
-        "logger-v3": {}
-    }
-}
-```
+Follow [this guide](https://www.elastic.co/guide/en/elasticsearch/reference/current/set-up-a-data-stream.html) to create:
+1. a component template `logs-logger` based on `src/template.json`
+2. an index template `logs-logger-*`
+3. and finally a data stream `logs-logger-default`
 
 ## Usage
 

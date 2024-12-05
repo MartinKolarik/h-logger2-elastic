@@ -1,13 +1,6 @@
 {
-	"index_patterns": [
-		"logger-v5*"
-	],
 	"settings": {
 		"index": {
-			"lifecycle": {
-				"name": "logger-v5",
-				"rollover_alias": "logger-v5"
-			},
 			"number_of_shards": "1",
 			"number_of_replicas": "0"
 		}
