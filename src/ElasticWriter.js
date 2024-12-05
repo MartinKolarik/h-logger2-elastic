@@ -48,7 +48,7 @@ class ElasticWriter extends Writer {
 		let body = [];
 
 		records.forEach((record) => {
-			body.push({ index: {} });
+			body.push({ create: {} });
 			body.push(record);
 		});
 
