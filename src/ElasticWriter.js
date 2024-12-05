@@ -65,7 +65,7 @@ class ElasticWriter extends Writer {
 	write (logger, level, message, error, context) {
 		let scope = logger.name;
 		let { apmClient } = this.options;
-		let levelAsString = logger.constructor.levelsByValue[level];
+		let levelAsString = logger.constructor.levelsByValue[level].toLowerCase();
 
 		if (apmClient && level >= logger.constructor.levels.error) {
 			apmClient.captureError(error || new Error(message), {
