@@ -47,6 +47,15 @@
 			"context": {
 				"type": "object",
 				"dynamic": true
+			},
+			"error.name": {
+				"type": "keyword"
+			},
+			"error.code": {
+				"type": "keyword"
+			},
+			"error.message": {
+				"type": "match_only_text"
 			}
 		}
 	}
