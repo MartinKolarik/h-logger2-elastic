@@ -15,7 +15,7 @@
 				"type": "keyword"
 			},
 			"message": {
-				"type": "keyword"
+				"type": "match_only_text"
 			},
 			"host.hostname": {
 				"type": "keyword"
