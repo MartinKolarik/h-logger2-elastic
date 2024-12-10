@@ -3,26 +3,36 @@
 	"description": "Elasticsearch and APM integration for h-logger2",
 	"version": "6.1.2",
 	"github": "https://github.com/MartinKolarik/h-logger2-elastic/",
-	"main": "./src/index.js",
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
 	"license": "MIT",
 	"dependencies": {
-		"@martin-kolarik/batch-queue": "^1.0.0",
+		"@martin-kolarik/batch-queue": "^1.1.1",
 		"lodash": "^4.17.21",
 		"promise-retry": "^2.0.1",
 		"safe-json-stringify": "^1.2.0"
 	},
 	"devDependencies": {
-		"@martin-kolarik/eslint-config": "^7.1.6",
-		"eslint": "^8.46.0",
-		"eslint-plugin-chai-expect": "^3.0.0",
+		"@martin-kolarik/eslint-config": "^7.3.2",
+		"@tsconfig/recommended": "^1.0.8",
+		"@types/lodash": "^4.17.13",
+		"@types/ms": "^0.7.34",
+		"@types/node": "^20.17.9",
+		"@types/safe-json-stringify": "^1.1.5",
+		"@typescript-eslint/eslint-plugin": "^8.18.0",
+		"@typescript-eslint/parser": "^8.18.0",
+		"eslint": "^8.57.1",
+		"eslint-plugin-chai-expect": "^3.1.0",
+		"eslint-plugin-node": "^11.1.0",
 		"eslint-plugin-prefer-let": "^3.0.1",
-		"eslint-plugin-promise": "^6.1.1",
-		"h-logger2": "^1.1.2"
+		"eslint-plugin-promise": "^6.6.0",
+		"h-logger2": "^1.2.1",
+		"typescript": "5.5"
 	},
 	"peerDependencies": {
 		"@elastic/elasticsearch": "^8.9.0",
 		"elastic-apm-node": "^4.8.1",
-		"h-logger2": "^1.0.4"
+		"h-logger2": "^1.2.0"
 	},
 	"author": {
 		"name": "Martin Kolárik",
@@ -34,6 +44,7 @@
 		"url": "https://github.com/MartinKolarik/h-logger2-elastic.git"
 	},
 	"scripts": {
+		"build": "tsc",
 		"lint": "eslint src",
 		"test": "npm run lint"
 	},
