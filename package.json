@@ -3,8 +3,8 @@
 	"description": "Elasticsearch and APM integration for h-logger2",
 	"version": "6.2.0",
 	"github": "https://github.com/MartinKolarik/h-logger2-elastic/",
-	"main": "./dist/index.js",
-	"types": "./dist/index.d.ts",
+	"main": "./src/index.js",
+	"types": "./src/index.d.ts",
 	"license": "MIT",
 	"dependencies": {
 		"@martin-kolarik/batch-queue": "^1.1.1",
@@ -14,25 +14,17 @@
 	},
 	"devDependencies": {
 		"@martin-kolarik/eslint-config": "^7.3.2",
-		"@tsconfig/recommended": "^1.0.8",
-		"@types/lodash": "^4.17.13",
-		"@types/ms": "^0.7.34",
-		"@types/node": "^20.17.9",
-		"@types/safe-json-stringify": "^1.1.5",
-		"@typescript-eslint/eslint-plugin": "^8.18.0",
-		"@typescript-eslint/parser": "^8.18.0",
 		"eslint": "^8.57.1",
 		"eslint-plugin-chai-expect": "^3.1.0",
 		"eslint-plugin-node": "^11.1.0",
 		"eslint-plugin-prefer-let": "^3.0.1",
 		"eslint-plugin-promise": "^6.6.0",
-		"h-logger2": "^1.2.1",
-		"typescript": "5.5"
+		"h-logger2": "^1.2.3"
 	},
 	"peerDependencies": {
 		"@elastic/elasticsearch": "^8.9.0",
 		"elastic-apm-node": "^4.8.1",
-		"h-logger2": "^1.2.0"
+		"h-logger2": "^1.2.2"
 	},
 	"author": {
 		"name": "Martin Kolárik",

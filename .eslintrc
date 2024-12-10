@@ -1,27 +1,6 @@
 {
-	"extends": "@martin-kolarik/eslint-config/typescript",
-	"overrides": [
-		{
-			"files": [
-				"src/**/*.ts"
-			],
-			"extends": "@martin-kolarik/eslint-config/typescript-type-checking",
-			"parserOptions": {
-				"project": true
-			},
-			"rules": {
-				"@typescript-eslint/no-explicit-any": "off",
-				"@typescript-eslint/no-unsafe-assignment": "off",
-				"@typescript-eslint/no-unsafe-member-access": "off",
-				"@typescript-eslint/no-unsafe-return": "off",
-				"@typescript-eslint/no-unsafe-argument": "off",
-				"n/no-missing-import": [ "error", {
-						"allowModules": [
-							"h-logger2"
-						]
-					}
-				]
-			}
-		}
+	"extends": "@martin-kolarik/eslint-config",
+	"ignorePatterns": [
+		"*.d.ts"
 	]
 }
