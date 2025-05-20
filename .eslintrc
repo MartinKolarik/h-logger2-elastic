@@ -1,6 +1,0 @@
-{
-	"extends": "@martin-kolarik/eslint-config",
-	"ignorePatterns": [
-		"*.d.ts"
-	]
-}
