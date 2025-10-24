@@ -7,6 +7,7 @@
 	},
 	"mappings": {
 		"dynamic": "false",
+		"date_detection": false,
 		"properties": {
 			"@timestamp": {
 				"type": "date"
@@ -57,6 +58,41 @@
 			"error.message": {
 				"type": "match_only_text"
 			}
-		}
+		},
+		"dynamic_templates": [
+			{
+				"string_only_context": {
+					"path_match": [
+						"context.*"
+					],
+					"mapping": {
+						"type": "keyword"
+					},
+					"unmatch_mapping_type": "object"
+				}
+			},
+			{
+				"flatten": {
+					"path_match": [
+						"context.flatten.*"
+					],
+					"mapping": {
+						"type": "flattened"
+					},
+					"match_mapping_type": "object"
+				}
+			},
+			{
+				"auto_flatten": {
+					"path_match": [
+						"context.*.*.*"
+					],
+					"mapping": {
+						"type": "flattened"
+					},
+					"match_mapping_type": "object"
+				}
+			}
+		]
 	}
 }
