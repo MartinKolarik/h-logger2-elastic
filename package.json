@@ -5,6 +5,20 @@
 	"github": "https://github.com/MartinKolarik/h-logger2-elastic/",
 	"main": "./src/index.js",
 	"types": "./src/index.d.ts",
+	"exports": {
+		".": {
+			"import": {
+				"types": "./src/index.d.mts",
+				"default": "./src/index.js"
+			},
+			"require": {
+				"types": "./src/index.d.ts",
+				"default": "./src/index.js"
+			}
+		},
+		"./package.json": "./package.json",
+		"./src/*": "./src/*"
+	},
 	"license": "MIT",
 	"dependencies": {
 		"@martin-kolarik/batch-queue": "^1.1.1",

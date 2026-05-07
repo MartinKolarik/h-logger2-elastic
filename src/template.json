@@ -85,7 +85,7 @@
 			{
 				"auto_flatten": {
 					"path_match": [
-						"context.*.*.*"
+						"context.*.*"
 					],
 					"mapping": {
 						"type": "flattened"
